@@ -7,8 +7,9 @@ function popall(segments: string[]): void {
     }
 }
 
-function fizzbuzz(maxNumber: number = 100, numberList: number[] = [3, 5, 7, 11, 13, 17]): void {
+export function fizzbuzz(maxNumber: number = 100, numberList: number[] = [3, 5, 7, 11, 13, 17]): string {
     const mySet: Set<number> = new Set<number>();
+    let last: string = null;
     for (let j = 0; j < numberList.length; j++) {
         mySet.add(numberList[j]);
     }
@@ -43,7 +44,11 @@ function fizzbuzz(maxNumber: number = 100, numberList: number[] = [3, 5, 7, 11, 
         } else {
             console.log(i);
         }
+        if (i == maxNumber) {
+            last = segments.join("");
+        }
     }
+    return last;
 }
 
 const rl = readline.createInterface({
@@ -59,20 +64,10 @@ rl.question("MaxNumber:", (limit: string) => {
             if (rules.length == 0) {
                 console.log("No rules found, applying all rules.");
                 fizzbuzz(maxNumber);
-                rl.close();
+            } else {
+                const numberList: number[] = rules.split(" ").filter(Boolean).map(part => parseInt(part, 10));
+                fizzbuzz(maxNumber, numberList);
             }
-            const parts: string[] = rules.split(" ");
-            const numberList: number[] = [];
-
-            parts.filter((part: string) => {
-                return part !== "";
-            });
-
-            parts.map((part: string) => {
-                numberList.push(parseInt(part, 10));
-            });
-
-            fizzbuzz(maxNumber, numberList);
             rl.close();
             });
     } else {
