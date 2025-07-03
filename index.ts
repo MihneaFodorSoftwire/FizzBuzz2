@@ -8,43 +8,37 @@ function popall(segments: string[]): void {
 }
 
 function fizzbuzz(maxNumber: number = 100, numberList: number[] = [3, 5, 7, 11, 13, 17]): void {
-    const myMap: Map<number, number> = new Map();
+    const mySet: Set<number> = new Set<number>();
     for (let j = 0; j < numberList.length; j++) {
-        myMap.set(numberList[j], 1);
+        mySet.add(numberList[j]);
     }
     for (let i = 1; i <= maxNumber; i++) {
         const segments: string[] = [];
-        let isWord: boolean = false;
         let isFezz: boolean = false;
-        if (myMap.has(3) && i % 3 == 0) {
-            isWord = true;
+        if (mySet.has(3) && i % 3 == 0) {
             segments.push("Fizz");
         }
-        if (myMap.has(13) && i % 13 == 0) {
-            isWord = true;
+        if (mySet.has(13) && i % 13 == 0) {
             isFezz = true;
             segments.push("Fezz");
         }
-        if (myMap.has(5) && i % 5 == 0) {
-            isWord = true;
+        if (mySet.has(5) && i % 5 == 0) {
             segments.push("Buzz");
         }
-        if (myMap.has(7) && i % 7 == 0) {
-            isWord = true;
+        if (mySet.has(7) && i % 7 == 0) {
             segments.push("Bang");
         }
-        if (myMap.has(11) && i % 11 == 0) {
-            isWord = true;
+        if (mySet.has(11) && i % 11 == 0) {
             popall(segments);
             if (isFezz) {
                 segments.push("Fezz");
             }
             segments.push("Bong");
         }
-        if (myMap.has(17) && i % 17 == 0) {
+        if (mySet.has(17) && i % 17 == 0) {
             segments.reverse();
         }
-        if (isWord) {
+        if (segments.length > 0) {
             console.log(segments.join(""));
         } else {
             console.log(i);
@@ -69,9 +63,15 @@ rl.question("MaxNumber:", (limit: string) => {
             }
             const parts: string[] = rules.split(" ");
             const numberList: number[] = [];
-            for (let i = 0; i < parts.length; i++) {
-                numberList[i] = parseInt(parts[i], 10);
-            }
+
+            parts.filter((part: string) => {
+                return part !== "";
+            });
+
+            parts.map((part: string) => {
+                numberList.push(parseInt(part, 10));
+            });
+
             fizzbuzz(maxNumber, numberList);
             rl.close();
             });
